@@ -6,33 +6,27 @@ method SelectionSort (a : array<int>)
   ensures Sorted(a[..])
   ensures Permutations (a[..], old(a[..]))
 {
-  var n := a.Length;
-  var i := 0;
-
-  while (i < n)
-    invariant 0 <= i <= n
-    invariant Sorted(a[..i])
-    invariant Permutations(a[..], old(a[..]))
+  var n := 0;
+  while (n != a.Length)
+    invariant 0 <= n <= a.Length
+    invariant forall i,j :: 0 <= i < n <= j < a.Length ==> a[i] <= a[j]
+    invariant forall k1, k2 :: 0 <= k1 < k2 < n ==> a[k1] <= a[k2]
+    invariant Permutations (a[..], old(a[..]))
   {
-    var minIdx := i;
-    var j := i + 1;
-
-    while (j < n)
-      invariant i < j <= n
-      invariant IsMinIndex(minIdx, a[i..j])
+    var mindex := n;
+    var m := n + 1;
+    while (m != a.Length)
+      invariant n <= m <= a.Length
+      invariant n <= mindex < m <= a.Length
+      invariant forall i :: n <= i < m ==> a[mindex] <= a[i]
     {
-      if (a[j] < a[minIdx]) {
-        minIdx := j;
+      if (a[m] < a[mindex]) {
+        mindex := m;
       }
-      j := j + 1;
+      m := m + 1;
     }
-    // Swap a[i] and a[minIdx]
-    if (i != minIdx) {
-      var temp := a[i];
-      a[i] := a[minIdx];
-      a[minIdx] := temp;
-    }
-
-    i := i + 1;
+    a[n], a[mindex] := a[mindex], a[n] ;
+    n := n + 1;
   }
+
 }
