@@ -38,3 +38,4 @@ method Merge(a: array<int>, b: array<int>) returns(c: array<int>)
   assert c[..k] == c[..];
   assert Sorted(c[..]);
 }
+

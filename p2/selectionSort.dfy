@@ -31,3 +31,14 @@ method SelectionSort (a : array<int>)
   }
 
 }
+
+method Main ()
+{
+  var a : array<int> := new int[] [5];
+  print "\t\t\ta = ", a[..], "\n";
+  SelectionSort(a);
+  // print "b = ArrayCopy(a); \tb = ", b[..], "\n";
+  // b[0] := 4;
+  // print "b[0] := 4; \t\ta = ", a[..], "\n";
+  print "\t\t\ta = ", a[..], "\n";
+}

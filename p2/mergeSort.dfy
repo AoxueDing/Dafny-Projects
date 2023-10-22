@@ -17,19 +17,29 @@ method MergeSort(a: array<int>)
   MergeSort(left);
   MergeSort(right);
 
-  var merged := Merge(left, right);
-
+  var merged := new int[a.Length];
+  merged := Merge(left, right);
   var i := 0;
+  assert Permutations(a[..], old(a[..]));
+  assert Permutations(merged[..], old(a[..]));
+
   while (i < a.Length)
     decreases a.Length - i
     invariant 0 <= i <= a.Length
     invariant forall k :: 0 <= k < i ==> a[k] == merged[k]
     invariant forall i, j : int :: 0 <= i <= j < merged.Length ==> merged[i] <= merged[j]
     invariant Permutations(merged[..i], a[..i])
+    invariant Permutations(merged[..], old(a[..]))
   {
     a[i] := merged[i];
     i := i + 1;
   }
-  assert multiset(a[..]) == multiset(old(a[..]));
+
+  assert (a[..] == a[..i]);
+  assert (merged[..] == merged[..i]);
 
 }
+
+
+
+
