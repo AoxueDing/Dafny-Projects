@@ -20,16 +20,16 @@ method MergeSort(a: array<int>)
   var merged := Merge(left, right);
 
   var i := 0;
-  while (i < a.Length) 
-      decreases a.Length - i
-      invariant 0 <= i <= a.Length
-      invariant forall k :: 0 <= k < i ==> a[k] == merged[k] 
-      
-      invariant Sorted(merged[..i])
-      invariant Permutations(merged[..i], a[..i])
+  while (i < a.Length)
+    decreases a.Length - i
+    invariant 0 <= i <= a.Length
+    invariant forall k :: 0 <= k < i ==> a[k] == merged[k]
+    invariant forall i, j : int :: 0 <= i <= j < merged.Length ==> merged[i] <= merged[j]
+    invariant Permutations(merged[..i], a[..i])
   {
-      a[i] := merged[i];
-      i := i + 1;
+    a[i] := merged[i];
+    i := i + 1;
   }
+  assert multiset(a[..]) == multiset(old(a[..]));
 
 }
